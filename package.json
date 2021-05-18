@@ -1,0 +1,22 @@
+{
+  "name": "learn-javascript",
+  "version": "1.0.0",
+  "description": "learn javascript code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haotie1990/learn-javascript.git"
+  },
+  "author": "gengkaiyang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haotie1990/learn-javascript/issues"
+  },
+  "homepage": "https://github.com/haotie1990/learn-javascript#readme",
+  "dependencies": {
+    "co": "^4.6.0"
+  }
+}
