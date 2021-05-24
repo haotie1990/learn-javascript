@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/haotie1990/learn-javascript#readme",
   "dependencies": {
-    "co": "^4.6.0"
+    "co": "^4.6.0",
+    "yallist": "^4.0.0"
   }
 }
