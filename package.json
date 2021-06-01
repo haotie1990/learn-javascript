@@ -21,11 +21,13 @@
     "co": "^4.6.0",
     "lodash": "^4.17.21",
     "progress": "^2.0.3",
-    "query-string": "^7.0.1",
-    "yallist": "^4.0.0"
+    "query-string": "^7.0.1"
   },
   "devDependencies": {
     "jest": "^27.0.5",
-    "promises-aplus-tests": "^2.1.2"
+    "promises-aplus-tests": "^2.1.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "yallist": "^4.0.0"
   }
 }
