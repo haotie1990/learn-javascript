@@ -6,7 +6,8 @@
  * @param {*} defaultValue
  */
 function getValue(context, path, defaultValue) {
-  if (Object.prototype.toString.call(context) !== '[object Object]') {
+  if (Object.prototype.toString.call(context) !== '[object Object]'
+    && Object.prototype.toString.call(context) !== '[object Array]') {
     return context;
   }
   let paths = [];
@@ -15,11 +16,8 @@ function getValue(context, path, defaultValue) {
   } else if (Object.prototype.toString.call(path) === '[object String]') {
     paths = path.split('.')
       .map(p => {
-        if (p.includes('[') && p.endsWith(']')) {
-          return [
-            p.slice(0, p.indexOf('[')),
-            p.slice(p.indexOf('[') + 1, p.length - 1)
-          ]
+        if (p.includes('[')) {
+          return p.replace(/\[/g, '.').replace(/\]/g, '').split('.').filter(_ => !!_);
         }
         return p;
       })
@@ -42,8 +40,9 @@ function getValue(context, path, defaultValue) {
 }
 
 const object = { 'a': [{ 'b': { 'c': 3 } }] };
-
+const array = [[[{ 'a': [{ 'b': { 'c': 3 } }] }]]];
 console.log(getValue(object, 'a[0].b.c'));
 console.log(getValue(object, 'a.0.b'));
 console.log(getValue(object, ['a', '0', 'b', 'c']));
 console.log(getValue(object, 'a.b.c', 'default'));
+console.log(getValue(array, '[0][0][0].a[0].b.c'))
