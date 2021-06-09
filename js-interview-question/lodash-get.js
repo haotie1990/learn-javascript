@@ -13,7 +13,7 @@ function getValue(context, path, defaultValue) {
   if (Array.isArray(path)) {
     paths = [...path];
   } else if (Object.prototype.toString.call(path) === '[object String]') {
-    path.split('.')
+    paths = path.split('.')
       .map(p => {
         if (p.includes('[') && p.endsWith(']')) {
           return [
@@ -23,9 +23,9 @@ function getValue(context, path, defaultValue) {
         }
         return p;
       })
-      .forEach(p => {
-        paths = paths.concat(Array.isArray(p) ? p : [p]);
-      });
+      .reduce((p, n) => {
+        return p.concat(n);
+      }, []);
   } else {
     paths = [String(path)];
   }
@@ -44,6 +44,6 @@ function getValue(context, path, defaultValue) {
 const object = { 'a': [{ 'b': { 'c': 3 } }] };
 
 console.log(getValue(object, 'a[0].b.c'));
-console.log(getValue(object, 'a'));
+console.log(getValue(object, 'a.0.b'));
 console.log(getValue(object, ['a', '0', 'b', 'c']));
 console.log(getValue(object, 'a.b.c', 'default'));
