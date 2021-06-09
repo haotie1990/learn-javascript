@@ -12,7 +12,7 @@ const Observer = {
   one: function(action, callback) {
     this.off(action, callback);
     const handlers = this.subscribes[action] || [];
-    const _callback = (payload) => {
+    const _callback = (payload) => { // 这里如果不用箭头函数怎么弄？=> 把this保存下来
       this.off(action, _callback);
       callback(payload);
     }
