@@ -7,6 +7,16 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "private-property-use-symbol",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/design-partterns/private-property-use-symbol/index.js",
+      "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v14.15.4/bin/node"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "node-lru-cache",
       "skipFiles": [
         "<node_internals>/**"
