@@ -20,6 +20,7 @@
     "co": "^4.6.0",
     "lodash": "^4.17.21",
     "progress": "^2.0.3",
+    "query-string": "^7.0.1",
     "yallist": "^4.0.0"
   },
   "devDependencies": {
