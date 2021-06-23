@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * 1.事件订阅
+ * 2.事件缓存,先发布,后订阅
+ * 3.事件一次性订阅
+ */
 const Observer = {
   subscribes: {},
   on: function(action, callback) {
