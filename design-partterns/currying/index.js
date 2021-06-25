@@ -1,5 +1,6 @@
 'use strict';
 
+// 此柯里化方法不完整
 function currying(fn) {
   const length = fn.length;
   const args = [];
