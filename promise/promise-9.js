@@ -68,6 +68,28 @@ const resolvePromise = function(promise, x, resolve, reject) {
   }
 }
 
+const resolve = function(promise, data) {
+  if (promise.status === STATUS_PENDING) {
+    promise.status = STATUS_FULFILLED;
+    promise.data = data;
+    while (promise.onResolvedCallbacks.length) {
+      const onResolved = promise.onResolvedCallbacks.shift();
+      onResolved(promise.data);
+    }
+  }
+}
+
+const reject = function(promise, error) {
+  if (promise.status === STATUS_PENDING) {
+    promise.status = STATUS_REJECTED;
+    promise.error = error;
+    while (promise.onRejectedCallbacks.length) {
+      const onRejected = promise.onRejectedCallbacks.shift();
+      onRejected(promise.error);
+    }
+  }
+}
+
 const STATUS_PENDING = 'pending';
 const STATUS_FULFILLED = 'fulfilled';
 const STATUS_REJECTED = 'rejected';
@@ -81,35 +103,15 @@ function PromiseAPlus(executor) {
   this.onRejectedCallbacks = [];
 
   try {
-    const resolve = this.resolve.bind(this);
-    const reject = this.reject.bind(this);
-    executor(resolve, reject);
+    const _resolve = (data) => resolve(this, data);
+    const _reject = (error) => reject(this, error);
+    executor(_resolve, _reject);
   } catch(error) {
     this.reject(error);
   }
 }
 
-PromiseAPlus.prototype.resolve = function(data) {
-  if (this.status === STATUS_PENDING) {
-    this.status = STATUS_FULFILLED;
-    this.data = data;
-    while (this.onResolvedCallbacks.length) {
-      const onResolved = this.onResolvedCallbacks.shift();
-      onResolved(this.data);
-    }
-  }
-}
 
-PromiseAPlus.prototype.reject = function(error) {
-  if (this.status === STATUS_PENDING) {
-    this.status = STATUS_REJECTED;
-    this.error = error;
-    while (this.onRejectedCallbacks.length) {
-      const onRejected = this.onRejectedCallbacks.shift();
-      onRejected(this.error);
-    }
-  }
-}
 
 PromiseAPlus.prototype.then = function(onFulfilled, onRejected) {
   const realOnFulfilled = typeof onFulfilled === 'function' ? onFulfilled : (value) => value;
@@ -276,15 +278,5 @@ PromiseAPlus.deferred = function() {
   });
   return result;
 }
-
-const promise = new PromiseAPlus((resolve, reject) => {
-  resolve(100)
-})
-
-promise
-  .then()
-  .then()
-  .then()
-  .then(value => console.log(value))
 
 module.exports = PromiseAPlus;
