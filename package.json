@@ -4,7 +4,8 @@
   "description": "learn javascript code",
   "main": "index.js",
   "scripts": {
-    "test": "jest --findRelatedTests"
+    "test": "jest --findRelatedTests",
+    "test-promise": "promises-aplus-tests ./promise/promise-9.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "yallist": "^4.0.0"
   },
   "devDependencies": {
-    "jest": "^27.0.5"
+    "jest": "^27.0.5",
+    "promises-aplus-tests": "^2.1.2"
   }
 }
