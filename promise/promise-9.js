@@ -1,6 +1,7 @@
 
 /**
  * Promise/A+规范：https://juejin.cn/post/6844903767654023182
+ *                https://promisesaplus.com/
  * 1. Promise是一个构造函数
  * 2. 创建一个Promise实例会传入一个执行器,此执行器会立即执行
  * 3. Promise有三种状态
@@ -38,6 +39,13 @@ const resolvePromise = function(promise, x, resolve, reject) {
       let called = false;
       try {
         // ? 规范这里为什么这么弄
+        /**
+         * x此时有几种情况
+         * * 1. x为promise->执行then方法
+         * * 2. x为带有then方法的thenable对象->作为'伪'promise会继续链式执行
+         *      thenable的定义:thenable对象所拥有的 then 方法应该和Promise所拥有的 then 方法具有同样的功能和处理过程
+         * * 3. x为带有then方法的普通对象->终止
+         */
         then.call(
           x,
           y => {
@@ -103,8 +111,8 @@ function PromiseAPlus(executor) {
   this.onRejectedCallbacks = [];
 
   try {
-    const _resolve = (data) => resolve(this, data);
-    const _reject = (error) => reject(this, error);
+    const _resolve = (data) => resolve(this/* promise */, data);
+    const _reject = (error) => reject(this/* promise */, error);
     executor(_resolve, _reject);
   } catch(error) {
     this.reject(error);
@@ -119,6 +127,7 @@ PromiseAPlus.prototype.then = function(onFulfilled, onRejected) {
 
   // ! Cannot access 'promise' before initialization
   // 为了等待promise初始化完成后再访问,需要创建一个异步函数去等待promise完成初始化
+  // * 在这个实现里,当调用promise的then方法时,方开始创建一个微任务
   const promise2 = new PromiseAPlus((resolve, reject) => {
     const fulfilledMicrotask = () => {
       queueMicrotask(() => {
@@ -265,6 +274,7 @@ PromiseAPlus.allSettled = function(promises) {
 }
 /**
  * ? 这个deffered方法干嘛的
+ * * promises-aplus-tests 这个测试库的规范要求：https://github.com/promises-aplus/promises-tests/blob/HEAD/README.md#adapters
  */
 PromiseAPlus.deferred = function() {
   const result = {
