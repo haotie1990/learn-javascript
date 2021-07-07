@@ -4,7 +4,7 @@
   "description": "learn javascript code",
   "main": "index.js",
   "scripts": {
-    "test": "jest --findRelatedTests",
+    "test": "jest --verbose",
     "test-promise": "promises-aplus-tests ./promise/promise-9.js"
   },
   "repository": {
