@@ -23,13 +23,16 @@ function findMaxValues(array) {
   return result;
 }
 
+// https://blog.csdn.net/smileiam/article/details/88732245
 function findMaxValuesStack(array) {
   const length = array.length;
   const result = new Array(length);
-  const stack = [0];
+  const stack = [0]; // stack保存未找到右侧第一个比其大元素的索引
   let index = 1;
   while (index < length) {
     const top = stack.length ? stack[stack.length - 1] : -1;
+    // 当遇到一个元素其比栈顶索引对应元素大时，将栈顶索引出栈，并设置其最大值
+    // 循环取栈顶索引对应元素与遍历到的元素进行对比，重复上一步判断，直到栈空或遍历到的元素小于栈顶索引对应元素
     if (stack.length && array[index] > array[top]) {
       result[stack.pop()] = array[index];
     } else {
@@ -43,7 +46,8 @@ function findMaxValuesStack(array) {
   return result;
 }
 
-const array = [2, 6, 7, 8, 10, 9];
+// x y z，z < y && z > x -> y > x
+const array = [2, 5, 4, 6, 8, 10, 9];
 const result = findMaxValuesStack(array);
 console.log(array);
 console.log(result);
