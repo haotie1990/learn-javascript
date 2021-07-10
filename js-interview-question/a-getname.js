@@ -17,6 +17,17 @@ let A = {
 };
 
 function defineProperty(target, property, value) {
+  /**
+   * target：需要定义属性的对象
+   * property：要定义修改的属性名称（string）或Symbol
+   * descriptor：属性描述符
+   *    configurable：当且仅当configuration为true，该属性的描述符才能改变，同时该属性也能对应的对象上删除，默认false
+   *    enumerable：当且仅当enumerable为true，该属性才会出现在对象的枚举属性中，默认false
+   *    value：该属性对应的值，可以是任何有效的JavaScript值（数值、对象、函数等），默认undefined
+   *    writable：当且仅当writable为true，属性的值，即上面的value，才能被赋值运算符改变，默认false
+   *    get：属性的getter函数，默认undefined，当访问该属性时，会调用此函数，注意函数内this的指向
+   *    set：属性的setter函数，默认undefined，当属性值被修改时，会调用此函数
+   */
   return Object.defineProperty(target, property, {
     get: function() {
       return value;
