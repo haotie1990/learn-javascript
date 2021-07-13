@@ -7,7 +7,35 @@ class TreeNode {
   }
 }
 
-function getPathSum(root, array) {
+// 广度优先搜索
+function getPathSum(root) {
+  const paths = [];
+  if (!root) {
+    return paths;
+  }
+  const node_queue = [root];
+  const path_queue = [[root.value]];
+
+  while (node_queue.length) {
+    const node = node_queue.shift();
+    const path = path_queue.shift();
+
+    if (!node.left && !node.right) {
+      paths.push(path);
+    } else {
+      if (node.left) {
+        node_queue.push(node.left);
+        path_queue.push(path.concat(node.left.value));
+      }
+
+      if (node.right) {
+        node_queue.push(node.right);
+        path_queue.push(path.concat(node.right.value))
+      }
+    }
+  }
+
+  return paths.map(path => path.reduce((acc, v) => acc += v, 0)).reduce((acc, v) => acc + v, 0);
 }
 
 const one = new TreeNode(1);
@@ -59,6 +87,8 @@ function postOrderTree(root, array) {
   return array;
 }
 
-console.log(preOrderTree(one));
-console.log(inOrderTree(one));
-console.log(postOrderTree(one));
+// console.log(preOrderTree(one));
+// console.log(inOrderTree(one));
+// console.log(postOrderTree(one));
+
+console.log(getPathSum(one));
