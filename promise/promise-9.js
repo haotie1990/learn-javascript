@@ -163,7 +163,7 @@ PromiseAPlus.prototype.then = function(onFulfilled, onRejected) {
   return promise2;
 }
 PromiseAPlus.prototype.catch = function(onRejected) {
-  this.then(undefined, onRejected);
+  return this.then(undefined, onRejected);
 }
 // * 规范：finally()方法返回一个Promise，无论Promise的状态是fulfilled还是rejected都会执行
 PromiseAPlus.prototype.finally = function(callback) {
