@@ -1,6 +1,6 @@
-const defineReactive = require('./defineReactive');
+import defineReactive from './defineReactive.mjs';
 
-function observer(value) {
+export default function observer(value) {
   if (!value || typeof value !== 'object') {
     throw new TypeError('value is not a object');
   }
@@ -8,5 +8,3 @@ function observer(value) {
     defineReactive(value, key, value[key]);
   });
 }
-
-module.exports = observer;
