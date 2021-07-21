@@ -17,8 +17,10 @@ Function.prototype.bind = function(){
     // func作为构造函数调用时,this是实例对象,此时构造函数的原型链在实例对象的原型链上
     const context = this instanceof func ? this : thisArgs;
     return self.apply(context, args.concat(_args));
-  } 
-  func.prototype = this.prototype;  
+  }
+  // 直接将原函数的原型链赋值给新函数的原型链，存在修改新函数的prototype，会造成原函数的prototye也被修改
+  // func.prototype = this.prototype;
+  func.prototype = Object.create(this.prototype);
   return func;
 }
 const Cat = Animal.bind(null,'cat');

@@ -3,6 +3,7 @@
  * 请实现一个 cacheRequest 方法，保证发出多次同一个 ajax 请求时都能拿到数据，而实际上只发出一次请求
  */
 
+// ! 问题一：请求失败后需要将缓存里面的数据清除，否则后续请求将一直是失败状态
 function fetch(url) {
   console.log('call fetch by:%s', url);
   return new Promise((resolve, reject) => {

@@ -27,6 +27,8 @@ function defineProperty(target, property, value) {
    *    writable：当且仅当writable为true，属性的值，即上面的value，才能被赋值运算符改变，默认false
    *    get：属性的getter函数，默认undefined，当访问该属性时，会调用此函数，注意函数内this的指向
    *    set：属性的setter函数，默认undefined，当属性值被修改时，会调用此函数
+   * 
+   * ! getter和setter方法中的this指向target，但是由于继承关系，this可能指向target的子对象
    */
   return Object.defineProperty(target, property, {
     get: function() {

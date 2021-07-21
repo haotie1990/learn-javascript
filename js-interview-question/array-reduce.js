@@ -81,6 +81,7 @@ Array.prototype.Reduce1 = function(callback, initialValue) {
     if (currentIndex >= len) {// 未提供initialValue且无法在数组中找到有效值,报错
       throw new Error('array is empty and initialValue is null');
     }
+    // 注意将currentIndex向后进一位，currentValue从下一位开始
     accumulator = array[currentIndex++];
   } else {
     accumulator = initialValue;
