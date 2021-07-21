@@ -73,7 +73,7 @@ function jsonStringify(value, memory) {
       result.push(`"${key}":${jsonStringify(value[key], memory)}`);
     }
   }
-  return `[${result.join(',')}]`.replace(/'/g, '"');
+  return `{${result.join(',')}}`.replace(/'/g, '"');
 }
 
 function jsonStringify1(obj) {

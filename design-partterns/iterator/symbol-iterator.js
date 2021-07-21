@@ -7,6 +7,7 @@ function Iterator(object) {
         const keys = Object.keys(object);
         return {
           next: function() {
+            // 最后要返回{ done: true, value: undefined }
             const done = !keys.length;
             const value = object[keys.shift()];
             return {

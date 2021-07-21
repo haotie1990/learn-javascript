@@ -36,6 +36,7 @@ function setter(target, key, value) {
     } else {
       ref[key] = value;
     }
+    // ref永远指向父级对象
     ref = ref[key];
   }
 }

@@ -79,10 +79,10 @@ const run = generator => {
     done = callback;
   }
 }
-// const result = run(readFileThunkWithGen);
-// result((err, data) => {
-//     console.log(err, data);
-// });
+const result = run(readFileThunkWithGen);
+result((err, data) => {
+    console.log(err, data);
+});
 
 const runPromise = generator => {
   return new Promise((resolve, reject) => {

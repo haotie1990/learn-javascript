@@ -10,6 +10,7 @@ function randomColor() {
     return Math.floor(Math.random() * (max - min + 1) + min); // min ~ max+1
   }
   // Number.toString(base), base范围2~36，默认是10
+  // Math.floor(Math.random() * 256) -> 0 ~ 255
   const red = `0${randomNum(0, 255).toString(16)}`.slice(-2);
   const green = `0${randomNum(0, 255).toString(16)}`.slice(-2);
   const blue = `0${randomNum(0, 255).toString(16)}`.slice(-2);

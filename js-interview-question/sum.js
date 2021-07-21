@@ -21,15 +21,15 @@ function sum(...args) {
    *    2. 否则，如果hint是"string"，尝试 toString > valueOf
    *    2. 否则，如果hint是"number"或"default"，尝试 valueOf > toString
    */
-  fn[Symbol.toPrimitive] = () => {
-    return args.reduce((s, c) => s += c, 0);
-  }
+  // fn[Symbol.toPrimitive] = () => {
+  //   return args.reduce((s, c) => s += c, 0);
+  // }
   fn.toString = () => {
     return args.reduce((s, c) => s += c, 0);
   }
-  fn.valueOf = () => {
-    return args.reduce((s, c) => s += c, 0);
-  }
+  // fn.valueOf = () => {
+  //   return args.reduce((s, c) => s += c, 0);
+  // }
   return fn;
 }
 
@@ -37,4 +37,4 @@ const a = sum(0);
 const b = sum(1)(2);
 const c = sum(4)(5);
 
-console.log('a:%d, b:%d, c:%d', a, b, c);
+console.log('a:%s, b:%d, c:%d', a, b, c);

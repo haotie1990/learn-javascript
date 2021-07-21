@@ -6,7 +6,6 @@
  */
 
 function repeat(func, times, wait) {
-  let args = null;
   let start = function(args) {
     func.apply(this, args);
     times--;
@@ -17,7 +16,7 @@ function repeat(func, times, wait) {
     }
   }
   return function () {
-    args = [].slice.call(arguments, 0);
+    let args = [].slice.call(arguments, 0);
     if (times > 0) {
       start(args);
     }

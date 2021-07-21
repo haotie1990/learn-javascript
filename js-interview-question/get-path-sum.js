@@ -20,6 +20,7 @@ function getPathSum(root) {
     const node = node_queue.shift();
     const path = path_queue.shift();
 
+    // 叶子节点，完成路径查找
     if (!node.left && !node.right) {
       paths.push(path);
     } else {

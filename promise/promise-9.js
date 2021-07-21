@@ -115,7 +115,7 @@ function PromiseAPlus(executor) {
     const _reject = (error) => reject(this/* promise */, error);
     executor(_resolve, _reject);
   } catch(error) {
-    this.reject(error);
+    _reject(error);
   }
 }
 

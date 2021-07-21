@@ -15,7 +15,7 @@ const Observer = {
     this.subscribes[action] = handlers;
   },
   one: function(action, callback) {
-    this.off(action, callback);
+    this.off(action, callback); // 清除之前的绑定关系
     const handlers = this.subscribes[action] || [];
     const _callback = (payload) => { // 这里如果不用箭头函数怎么弄？=> 把this保存下来
       this.off(action, _callback);

@@ -1,20 +1,21 @@
 
-function InstanceOf(source, target) {
-  if (source == null) {
+// instanceof用来检测构造函数constructor的原型prototype是否在对象object的原型链上
+function InstanceOf(object, constructor) {
+  if (object == null) {
     return false;
   }
-  if (typeof source !== 'object' && typeof source !== 'function') {
+  if (typeof object !== 'object' && typeof object !== 'function') {
     return false;
   }
-  if (typeof target.constructor !== 'function') {
+  if (typeof constructor !== 'function') {
     return false;
   }
-  let proto = Object.getPrototypeOf(source);
+  let proto = Object.getPrototypeOf(object);
   while (true) {
     if (proto == null) {
       return false;
     }
-    if (proto === target.prototype) {
+    if (proto === constructor.prototype) {
       return true;
     }
     proto = Object.getPrototypeOf(proto);

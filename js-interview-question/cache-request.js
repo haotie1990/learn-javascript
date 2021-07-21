@@ -4,6 +4,7 @@
  */
 
 // ! 问题一：请求失败后需要将缓存里面的数据清除，否则后续请求将一直是失败状态
+// ! 问题二：请求设置失效时间
 function fetch(url) {
   console.log('call fetch by:%s', url);
   return new Promise((resolve, reject) => {

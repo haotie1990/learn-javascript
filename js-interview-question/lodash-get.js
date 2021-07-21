@@ -14,16 +14,17 @@ function getValue(context, path, defaultValue) {
   if (Array.isArray(path)) {
     paths = [...path];
   } else if (Object.prototype.toString.call(path) === '[object String]') {
-    paths = path.split('.')
-      .map(p => {
-        if (p.includes('[')) {
-          return p.replace(/\[/g, '.').replace(/\]/g, '').split('.').filter(_ => !!_);
-        }
-        return p;
-      })
-      .reduce((p, n) => {
-        return p.concat(n);
-      }, []);
+    // paths = path.split('.')
+    //   .map(p => {
+    //     if (p.includes('[')) {
+    //       return p.replace(/\[/g, '.').replace(/\]/g, '').split('.').filter(_ => !!_);
+    //     }
+    //     return p;
+    //   })
+    //   .reduce((p, n) => {
+    //     return p.concat(n);
+    //   }, []);
+    paths = path.replace(/\[/g, '.').replace(/\]/g, '').split('.').filter(Boolean);
   } else {
     paths = [String(path)];
   }

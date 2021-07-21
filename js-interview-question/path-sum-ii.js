@@ -39,11 +39,11 @@ function pathSum(root, targetSum) {
     sum = sum - node.val;
     path.push(node.val);
     if (!node.left && !node.right && sum === 0) {
-        result.push(path);
-        return;
+      result.push(path);
+      return;
     }
-    collectPath(node.left, sum, [...path]);
-    collectPath(node.right, sum, [...path]);
+    collectPath(node.left, sum, [].concat(path));
+    collectPath(node.right, sum, [].concat(path));
   }
   collectPath(root, targetSum, []);
   return result;
