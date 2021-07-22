@@ -18,11 +18,14 @@
   },
   "homepage": "https://github.com/haotie1990/learn-javascript#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "co": "^4.6.0",
     "koa": "^2.13.1",
     "lodash": "^4.17.21",
+    "node-fetch": "^2.6.1",
     "progress": "^2.0.3",
-    "query-string": "^7.0.1"
+    "query-string": "^7.0.1",
+    "thunkify": "^2.1.2"
   },
   "devDependencies": {
     "jest": "^27.0.5",
