@@ -44,3 +44,36 @@ console.log(binary2number(1001));
 console.log(binary2number(1010));
 console.log(binary2number(11));
 console.log(binary2number(10));
+
+console.log('--------------------------------');
+
+/**
+ * 1[-/+] 11[位指数]        52[数值]                 64位长
+ * +  -  + -------- + ----------------------- +
+*/
+
+/**
+ * 十进制小数转二进制小数，乘2取整，顺序排列
+ * @param {number} number 
+ */
+function float2binary(number) {
+  let result = '';
+  let count = 0;
+  // 最大精度是53位，此处需要判断count小于等于53
+  while (number !== 0 && count < 54) {
+    // number范围：(0, 1]，乘2后，(0, 2]，向下取值，0/1，顺序排列
+    let n = number * 2;
+    result = result + Math.floor(n);
+    // 除1，取余，得小数部分，此时会失真
+    number = (n) % 1;
+    count++;
+    // console.log('number:%d, count:%d, result:%d', number, count, result);
+  }
+  return '0.' + result;
+}
+
+console.log(float2binary(0.1) + '/' + (0.1).toString(2));
+console.log(float2binary(0.25) + '/' + (0.25).toString(2));
+console.log(float2binary(0.125) + '/' + (0.125).toString(2));
+console.log(float2binary(0.333) + '/' + (0.333).toString(2));
+console.log(float2binary(0.8125) + '/' + (0.8125).toString(2));
