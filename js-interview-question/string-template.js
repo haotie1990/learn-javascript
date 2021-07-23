@@ -12,7 +12,7 @@
 // }
 
 function template(input, data) {
-  const regex = RegExp(/\{\{([\w|\.]+)\}\}/, 'g');
+  const regex = RegExp(/\{\{([\w|\.|\[|\]|"]+)\}\}/, 'g');
   let result;
   while((result = regex.exec(input)) !== null) { // input字符串不能修改
     const [pattern, key] = result;
@@ -24,14 +24,14 @@ function template(input, data) {
   return input;
 }
 
-const string = '我是{{user.name}}，年龄{{user.age}}，性别{{user.sex}}';
+const string = '我是{{user["name"]}}，年龄{{user.age}}，性别{{user.sex}}，地址{{address}}';
 const person = {
   name: 'jack',
   age: 18,
   sex: 'male'
 };
 
-console.log(template(string, { user: person }));
+console.log(template(string, { user: person, address: 'Beijing' }));
 
 // var regex1 = RegExp(/\{\{(\w+)\}\}/, 'g');
 // var str1 = '我是{{name}}，年龄{{age}}，性别{{sex}}';
