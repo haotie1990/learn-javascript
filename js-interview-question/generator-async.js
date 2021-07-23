@@ -59,7 +59,7 @@ function mockAsyncPrint(message, callback) {
   setTimeout(function(){
     // node.js callback函数的第一个参数永远是err
     callback(null, message.toUpperCase());
-  }, 500);
+  }, 100);
 }
 
 const printThunk = thunkES5(print);
@@ -115,6 +115,7 @@ function runGenerator(generator, callback) {
   next();
 }
 
+// 支持返回Promise
 function runGenPromise(gen) {
   let _resolve = null;
   let _reject = null;
@@ -142,8 +143,124 @@ function runGenPromise(gen) {
   return callback;
 }
 
-runGenerator(sequencePrint, function(err, data) {
-  console.log(data);
-});
+// runGenerator(sequencePrint, function(err, data) {
+//   console.log(data);
+// });
 
-runGenPromise(sequencePrint).then(data => console.log(data));
+// runGenPromise(sequencePrint).then(data => console.log(data));
+
+function mockAsyncPrintPromise(message) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // if (message === 'HELLO') {
+      //   resolve(message.toLowerCase());
+      // } else if (message === 'WORLD') {
+      //   reject(new Error(message));
+      // }
+      resolve(message.toLowerCase());
+    }, 100);
+  });
+}
+
+function* sequencePrintPromise() {
+  let a = yield mockAsyncPrintPromise('HELLO');
+  let b = yield mockAsyncPrintPromise('WORLD');
+  return a + ' ' + b;
+}
+
+// 支持yield表达式后面跟着Promise
+function runGenByPromise(generator) {
+  return new Promise(function(resolve, reject) {
+    const g = generator();
+    const next = function(err, data) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const result = g.next(data);
+      if (!result.done) {
+        result.value.then(next.bind(null, null), next);
+      } else {
+        resolve(result.value);
+      }
+    }
+    next();
+  });
+}
+
+// runGenByPromise(sequencePrintPromise)
+//   .then(data => console.log(data), error => console.log(error));
+
+
+// 手写Co实现：https://github.com/tj/co/blob/master/index.js
+/**
+ * 
+ * @param {Generator} generator 
+ */
+function myCo(generator) {
+  const isGenerator = value => Object.prototype.toString.call(value) === '[object Generator]';
+  const isGeneratorFunction = value => Object.prototype.toString.call(value) === '[object GeneratorFunction]';
+  const isPromise = value => Object.prototype.toString.call(value) === '[object Promise]';
+  const isFunction = value => Object.prototype.toString.call(value) === '[object Function]';
+  return new Promise((resolve, reject) => {
+    if (!isGeneratorFunction（generator)) {
+      return reject(new Error('generator not available'));
+    }
+    const g = generator();
+    if (!isGenerator(g)) {
+      return reject(new Error('generator not available'));
+    }
+    onFulfilled();
+    function onFulfilled(data) {
+      let res = null;
+      try {
+        res = g.next(data);
+      } catch (error) {
+        reject(error);
+      }
+      next(res);
+    }
+
+    function onRejected(error) {
+      let res = null;
+      try {
+        // 将错误交回到generator内部处理，如果generator内部没有处理，则再由外部接收
+        res = g.throw(error);
+      } catch (error) {
+        reject(error);
+      }
+      next(res);
+    }
+
+    function next(res) {
+      if (res.done) {
+        return resolve(res.value);
+      }
+      let value = res.value;
+      // 如果value是一个thunk函数，转成Promise
+      if (isFunction(value)) {
+        value = thunkToPromise(value);
+      } else if (!isPromise(value)) { // 如果不是Promise也不是thunk函数，则直接转为Promise，co在这个地方处理更复杂一些
+        value = Promise.resolve(value);
+      }
+      value.then(onFulfilled, onRejected);
+    }
+
+    function thunkToPromise(func) {
+      return new Promise((resolve, reject) => {
+        func.call(this, function(err, ...args) {
+          if (err) {
+            return reject(err);
+          }
+          resolve(args);
+        });
+      });
+    }
+  });
+}
+
+myCo(sequencePrint)
+  .then(data => console.log(data), error => console.log(error));
+
+myCo(sequencePrintPromise)
+  .then(data => console.log(data), error => console.log(error));
