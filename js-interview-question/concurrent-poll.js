@@ -26,6 +26,6 @@ function concurrentPoll(requests, max) {
     for (const task of tasks) {
       promise = promise.then(task).then(data => result = result.concat(data));
     }
-    resolve(result);
+    promise.then(() => resolve(result));
   });
 }

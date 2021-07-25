@@ -19,6 +19,7 @@
   "homepage": "https://github.com/haotie1990/learn-javascript#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "bluebird": "^3.7.2",
     "co": "^4.6.0",
     "koa": "^2.13.1",
     "lodash": "^4.17.21",
