@@ -1,5 +1,20 @@
 'use strict';
 
+function defineIterator(target) {
+  Object.defineProperty(target, Symbol.iterator, {
+    value: function() {
+      const keys = Object.keys(target);
+      return {
+        next: function() {
+          const done = !keys.length;
+          const value = target[keys.shift()];
+          return { value, done };
+        }
+      }
+    }
+  });
+}
+
 function Iterator(object) {
   if (typeof object === 'object' && object !== null) {
     const _object = Object.assign({
@@ -39,7 +54,11 @@ const obj = {
   c: 3
 };
 
-const _obj = Iterator(obj);
-for (const value of _obj) {
+// const _obj = Iterator(obj);
+defineIterator(obj);
+for (const value of obj) {
+  console.log(value);
+}
+for (const value of obj) {
   console.log(value);
 }

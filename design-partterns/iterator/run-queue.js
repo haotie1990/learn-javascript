@@ -11,7 +11,7 @@ function runQueue(queue, callback) {
   }
   const step = (index) => {
     if (index >= queue.length) {
-      callback();
+      return callback();
     }
     const fn = queue[index];
     fn(() => {

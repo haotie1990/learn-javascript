@@ -24,7 +24,7 @@ function objectFactory() {
 
   const obj = Object.create(Constructor.prototype)
   const ret = Constructor.apply(obj, arguments);
-  return typeof ret === 'object' ? ret : obj;
+  return typeof ret === 'object' && ret !== null ? ret : obj;
 }
 
 const person = objectFactory(Person, 'jack', 18);

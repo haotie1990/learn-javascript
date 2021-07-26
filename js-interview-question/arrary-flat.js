@@ -20,7 +20,7 @@ function flat(array, depth = Number.MAX_VALUE) {
 
 function flat1(array, depth = Number.MAX_VALUE) {
   let result = [...array];
-  while (result.some(i => Array.isArray(i) && depth > 0)) {
+  while (result.some(i => Array.isArray(i)) && depth > 0) {
     // 注意concat方法的参数valueN，即可是数值也可以是数组，当时数组时存在隐形的展开操作
     // concat方法不改变原数组，返回一个新数组
     result = [].concat(...result);
