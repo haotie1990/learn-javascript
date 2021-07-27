@@ -70,7 +70,7 @@ var myPow = function(x, n) {
     if (b === 0) {
       return 1;
     }
-    var c = count(a, Math.floor( b / 2));
+    var c = count(a, Math.floor(b / 2));
     return b % 2 === 0 ? c * c : c * c * a;
   }
   return n >= 0 ? count(x, n) : 1 / count(x, -n);

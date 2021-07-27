@@ -23,7 +23,7 @@ function encodeString(string) {
     const letter = strArray.shift();
     if (pick() !== letter) {
       concat();
-      stack.length = 0;
+      stack.length = 0; // 清空栈
     }
     stack.push(letter);
   }

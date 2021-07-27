@@ -52,6 +52,8 @@ function debounce(func, options = {}) {
       if (!timer) {
         result = func.apply(self, args);
       }
+      // 对比了underscore的实现，有一点不同，立即触发执行一次后，后续事件连续触发停止limit事件后才会再次处理
+      // https://github.com/lessfish/underscore-analysis/blob/master/underscore-1.8.3.js/underscore-1.8.3-analysis.js
       timer = setTimeout(function() {
         timer = null;
       }, limit);

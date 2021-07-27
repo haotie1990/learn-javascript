@@ -30,6 +30,12 @@ eight.right = four1;
 four1.left = five1;
 four1.right = one;
 
+/**
+ * 查找二叉树，找到路径，且路径和等于指定值
+ * @param {*} root 
+ * @param {*} targetSum 
+ * @returns 
+ */
 function pathSum(root, targetSum) {
   let result = [];
   const collectPath = function(node, sum, path) {

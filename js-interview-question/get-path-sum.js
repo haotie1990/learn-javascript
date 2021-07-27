@@ -7,7 +7,7 @@ class TreeNode {
   }
 }
 
-// 广度优先搜索
+// 广度优先搜索，关键是使用一个队列（FIFO）实现二叉树遍历
 function getPathSum(root) {
   const paths = [];
   if (!root) {

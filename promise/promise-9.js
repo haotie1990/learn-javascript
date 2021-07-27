@@ -110,9 +110,9 @@ function PromiseAPlus(executor) {
   this.onResolvedCallbacks = [];
   this.onRejectedCallbacks = [];
 
+  const _resolve = (data) => resolve(this/* promise */, data);
+  const _reject = (error) => reject(this/* promise */, error);
   try {
-    const _resolve = (data) => resolve(this/* promise */, data);
-    const _reject = (error) => reject(this/* promise */, error);
     executor(_resolve, _reject);
   } catch(error) {
     _reject(error);
