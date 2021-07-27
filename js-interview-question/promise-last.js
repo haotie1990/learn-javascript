@@ -10,25 +10,30 @@
 function lastPromise(promiseFunction) {
   const cache = new Map();
   return function () {
+    let _resolve = null;
+    let _reject = null;
     if (cache.has(promiseFunction)) {
-      let prePromise = cache.get(promiseFunction);
-      cache.delete(prePromise);
+      let cancel = cache.get(promiseFunction);
+      cancel();
     }
-    let promise = promiseFunction()
+    promiseFunction()
       .then(data => {
-        if (cache.has(promise)) {
-          cache.delete(promise);
-          return data;
+        if (_resolve) {
+          _resolve(data);
         }
       }, error => {
-        if (cache.has(promise)) {
-          cache.delete(promise);
-          return error;
+        if (_reject) {
+          _reject(error);
         }
       }).finally(() => cache.delete(promiseFunction));
-    cache.set(promise, true);
-    cache.set(promiseFunction, promise);
-    return promise;
+    cache.set(promiseFunction, function() {
+      _resolve = null;
+      _reject = null;
+    });
+    return new Promise((resolve, reject) => {
+      _resolve = resolve;
+      _reject = reject;
+    });
   }
 }
   
