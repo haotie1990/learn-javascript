@@ -56,21 +56,24 @@
  * @return {number[][]}
  */
  var permute = function(nums) {
-  const stack = [];
-  const len = nums.length;
-  stack.push([nums.shift()]);
-  while(nums.length) {
-      let n = nums.shift();
-      let l = stack.length;
-      for(let i = 0; i < l; i++) {
-        stack.push(stack[i].concat(n));
-        stack.push([n].concat(stack[i]));
+  let result = [];
+  let used = Array.from({ length: nums.length }).fill(false);
+  function search(collection, used) {
+    if (collection.length === nums.length) {
+      result.push(collection);
+      return;
+    }
+    for (let i = 0; i < nums.length; i++) {
+      if (used[i] === false) {
+        used[i] = true;
+        search(collection.concat(nums[i]), used.slice(0));
+        used[i] = false; // 重置状态
       }
-      stack.push([n]);
+    }
+    collection = null;
+    used = null;
   }
-  return stack.filter(num => num.length === len);
+  search([], used);
+  return result;
 }
 // @lc code=end
-
-console.log(permute([1, 2, 3]))
-
