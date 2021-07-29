@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/haotie1990/learn-javascript#readme",
   "dependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
     "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "co": "^4.6.0",
