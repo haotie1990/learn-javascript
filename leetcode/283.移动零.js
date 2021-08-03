@@ -35,27 +35,43 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var moveZeroes = function(nums) {
-  let len = nums.length;
-  let zeroCount = 0;
-  for (let i = 0; i < len; i++) {
-    if (nums[i] === 0) {
-      zeroCount++;
+  // let len = nums.length;
+  // let zeroCount = 0;
+  // for (let i = 0; i < len; i++) {
+  //   if (nums[i] === 0) {
+  //     zeroCount++;
+  //   }
+  // }
+  // if (zeroCount === len) {
+  //   return;
+  // }
+  // while (zeroCount > 0) {
+  //   let zeroIndex = -1;
+  //   for (let i = 0; i < len; i++) {
+  //     if (zeroIndex === -1 && nums[i] === 0) {
+  //       zeroIndex = i;
+  //     } else if (zeroIndex >= 0 && nums[i] !== 0) {
+  //       [nums[zeroIndex], nums[i]] = [nums[i], nums[zeroIndex]];
+  //       zeroIndex = i;
+  //     }
+  //   }
+  //   zeroCount--;
+  // }
+
+  // [0,1,0,3,12]
+  // [1,0,0,3,12]
+  // [1,3,0,0,12]
+  // [1,3,12,0,0];
+  // left和right之间都是零，left指向第一个零，right指向第一个非零
+  let left = 0;
+  let right = 0;
+  let length = nums.length;
+  while (right < length) {
+    if (nums[right]) {
+      [nums[left], nums[right]] = [nums[right], nums[left]];
+      left++;
     }
-  }
-  if (zeroCount === len) {
-    return;
-  }
-  while (zeroCount > 0) {
-    let zeroIndex = -1;
-    for (let i = 0; i < len; i++) {
-      if (zeroIndex === -1 && nums[i] === 0) {
-        zeroIndex = i;
-      } else if (zeroIndex >= 0 && nums[i] !== 0) {
-        [nums[zeroIndex], nums[i]] = [nums[i], nums[zeroIndex]];
-        zeroIndex = i;
-      }
-    }
-    zeroCount--;
+    right++;
   }
 };
 // @lc code=end

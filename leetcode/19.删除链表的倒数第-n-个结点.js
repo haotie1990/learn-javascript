@@ -68,32 +68,52 @@
  */
 var removeNthFromEnd = function(head, n) {
   // https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/solution/shan-chu-lian-biao-de-dao-shu-di-nge-jie-dian-b-61/
-  let pre = null;
-  let mid = null;
+  // let pre = null;
+  // let mid = null;
+  // let next = null;
+  // while (n--) {
+  //   next = next ? next.next : head;
+  // }
+  // // next此时指正正数第n个节点
+  // while(next) {
+  //   mid = mid ? mid.next : head;
+  //   next = next.next;
+  // }
+  // // 如果倒数第n个节点指向首节点，直接处理
+  // if (mid === head) {
+  //   return mid.next;
+  // }
+  // // mid 指向倒数第n个节点
+  // do {
+  //   pre = pre ? pre.next : head;
+  // } while(pre && pre.next !== mid)
+  // // pre指向倒数n+1个节点
+  // if (pre) {
+  //   pre.next = mid.next;
+  //   return head;
+  // }
+  // // 链表只有一个节点，并且需要删除
+  // return pre;
+
+  // 使用栈来操作
+  let stack = [];
+  let cur = head;
+  while (cur) {
+    stack.push(cur);
+    cur = cur.next;
+  }
+  let del = null;
   let next = null;
-  while (n--) {
-    next = next ? next.next : head;
+  while (n-- && stack.length) {
+    next = del;
+    del = stack.pop();
   }
-  // next此时指正正数第n个节点
-  while(next) {
-    mid = mid ? mid.next : head;
-    next = next.next;
+  let pre = stack[stack.length - 1];
+  if (!pre) { // 栈顶为空说明删除的是头结点，直接返回
+    return next;
   }
-  // 如果倒数第n个节点指向首节点，直接处理
-  if (mid === head) {
-    return mid.next;
-  }
-  // mid 指向倒数第n个节点
-  do {
-    pre = pre ? pre.next : head;
-  } while(pre && pre.next !== mid)
-  // pre指向倒数n+1个节点
-  if (pre) {
-    pre.next = mid.next;
-    return head;
-  }
-  // 链表只有一个节点，并且需要删除
-  return pre;
+  pre.next = next;
+  return stack.shift(); // 栈底元素是头结点
 };
 // @lc code=end
 
