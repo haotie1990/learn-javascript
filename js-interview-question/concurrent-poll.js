@@ -29,3 +29,31 @@ function concurrentPoll(requests, max) {
     promise.then(() => resolve(result));
   });
 }
+
+function poll(requests, limit) {
+  let _resolve = null;
+  let _reject = null;
+  let result = [];
+  let currentIndex = 0;
+  function next(index) {
+    const req = requests[index];
+    if (!req) return;
+    req()
+      .then(data => {
+        return result[index] = data;
+      },_reject)
+      .then(() => next(currentIndex++))
+      .finally(() => {
+        if (result.length === requests.length) {
+          _resolve(result);
+        }
+      });
+  }
+  for (let i = 0; i < limit && i < requests.length; i++) {
+    next(currentIndex++);
+  }
+  return new Promise((resolve, reject) => {
+    _resolve = resolve;
+    _reject = reject;
+  });
+}
