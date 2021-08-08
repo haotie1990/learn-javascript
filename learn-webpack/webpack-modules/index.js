@@ -1,4 +1,3 @@
-const moduleA = require('./moduleA');
-
-console.log('this is entry');
-moduleA.getName();
+import { name as ModuleA } from './ModuleA';
+import print from './moduleB';
+import('./moduleC.js').then(module => console.log(module));
