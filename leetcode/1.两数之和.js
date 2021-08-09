@@ -68,15 +68,22 @@ var twoSum = function(nums, target) {
   let map = new Map();
   let len = nums.length;
   for (let i = 0; i < len; i++) {
-    map.set(nums[i], i);
-  }
-  for (let i = 0; i < len; i++) {
-    let diff = target - nums[i];
-    if (map.has(diff) && map.get(diff) !== i) {
-      return [i, map.get(diff)];
+    if (typeof map.get(nums[i]) !== 'undefined') {
+      return [map.get(nums[i]), i];
+    } else {
+      map.set(target - nums[i], i);
     }
   }
-  return [];
+  // for (let i = 0; i < len; i++) {
+  //   map.set(nums[i], i);
+  // }
+  // for (let i = 0; i < len; i++) {
+  //   let diff = target - nums[i];
+  //   if (map.has(diff) && map.get(diff) !== i) {
+  //     return [i, map.get(diff)];
+  //   }
+  // }
+  // return [];
 };
 // @lc code=end
 

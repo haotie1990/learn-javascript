@@ -54,13 +54,27 @@
  * @return {boolean}
  */
 var isAnagram = function(s, t) {
+  // if (s.length !== t.length) {
+  //   return false;
+  // }
+  // for (var i = 0; i < s.length; i++) {
+  //   t = t.replace(s[i], '');
+  // }
+  // return t.length === 0;
+
+  // s = s.split('').sort().join('');
+  // t = t.split('').sort().join('');
+  // return s === t;
+
   if (s.length !== t.length) {
     return false;
   }
-  for (var i = 0; i < s.length; i++) {
-    t = t.replace(s[i], '');
+  let map = {};
+  for (let i = 0; i < s.length; i++) {
+    map[s.charAt(i)] ? map[s.charAt(i)]++ : map[s.charAt(i)] = 1;
+    map[t.charAt(i)] ? map[t.charAt(i)]-- : map[t.charAt(i)] = -1;
   }
-  return t.length === 0;
+  return Object.values(map).every(v => v === 0);
 };
 // @lc code=end
 
