@@ -47,3 +47,24 @@ mergePromise([ajax1, ajax2, ajax3]).then((data) => {
   console.log(data); // data 为[1,2,3]
 });
 // 执行结果为：1 2 3 done [1,2,3]
+
+const list = [1, 2, 3];
+const square = num => {
+  return new Promise((resolve, reject) => {
+    console.log(num);
+    setTimeout(() => {
+      resolve(num * num);
+    }, 1000);
+  });
+};
+function test() {
+  let promise = Promise.resolve();
+  for (let num of list) {
+    promise = promise
+      .then(() => num)
+      .then(square)
+      .then(res => console.log('time:%s, res:%s', Date.now(), res));
+  }
+  return promise;
+}
+test().then(() => {});

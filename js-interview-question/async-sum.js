@@ -37,7 +37,6 @@ function sumPoll(arr, add, concurrency = Infinity) {
     }), Promise.resolve()));
   }
   return Promise.all(tasks).then(result => {
-    console.log('result:%s', result);
     if (result.length === 1) {
       return result[0];
     }
@@ -45,4 +44,4 @@ function sumPoll(arr, add, concurrency = Infinity) {
   });
 }
 
-sumPoll(arr, add, 3).then(result => console.log(result));
+sumPoll(arr, add).then(result => console.log(result));
