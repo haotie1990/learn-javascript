@@ -69,9 +69,9 @@ var maxAreaOfIsland = function(grid) {
     grid[r][c] = 0;
     let area = 1;
     for (let i = 0; i < 4; i++) {
-      let _x = r + dx[i];
-      let _y = c + dy[i];
-      area = area + findMax(_x, _y);
+      let _r = r + dx[i];
+      let _c = c + dy[i];
+      area = area + findMax(_r, _c);
     }
     return area;
   }

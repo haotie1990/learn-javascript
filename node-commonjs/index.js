@@ -47,3 +47,9 @@ console.log('exports === module.exports', exports === module.exports);
 
 // require.resolve()命令只解析返回模块的绝对路径，但不加载执行模快脚本，下面的代码并没有打印输出：loading module a
 console.log('require.resolve: ' + require.resolve('./module-a.js'));
+
+const ModuleD = require('./module-d');
+console.log('ModuleD:' + ModuleD);
+setTimeout(function () {
+  console.log('ModuleD:' + ModuleD);
+}, 300);
